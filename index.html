@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#f7f3ec">
+
+<title>Joki & Aidana | 10.10.2026</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+/* =====================================================
+   1. GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f7f3ec;
+    color: #332f2a;
+    font-family: "Montserrat", sans-serif;
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   2. INTRO SCREEN
+===================================================== */
+
+.intro {
+    position: fixed;
+    inset: 0;
+
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #fffefa 0%,
+            #f5efe5 70%,
+            #eee5d8 100%
+        );
+
+    transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+}
+
+.intro.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   3. ENVELOPE
+===================================================== */
+
+.envelope-wrapper {
+    text-align: center;
+
+    animation:
+        envelopeFloat 3s ease-in-out infinite;
+}
+
+@keyframes envelopeFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-9px);
+    }
+}
+
+
+.envelope {
+    position: relative;
+
+    width: 330px;
+    height: 220px;
+
+    margin: auto;
+
+    cursor: pointer;
+
+    perspective: 1000px;
+}
+
+
+/* Envelope paper */
+
+.envelope-paper {
+    position: absolute;
+
+    left: 35px;
+    top: 35px;
+
+    width: 260px;
+    height: 165px;
+
+    z-index: 2;
+
+    background: #fff;
+
+    box-shadow:
+        0 8px 25px rgba(80, 60, 35, .10);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        transform 1.8s cubic-bezier(.77,0,.18,1);
+}
+
+.envelope.open .envelope-paper {
+    transform: translateY(-145px);
+}
+
+.envelope-paper span {
+    font-size: 9px;
+
+    letter-spacing: 4px;
+
+    color: #8b7961;
+}
+
+.envelope-paper h2 {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 38px;
+
+    font-weight: 400;
+
+    margin: 8px 0;
+}
+
+
+/* Envelope body */
+
+.envelope-body {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 190px;
+
+    z-index: 3;
+
+    background: #fffdf9;
+
+    border:
+        1px solid #d7cbb9;
+
+    box-shadow:
+        0 30px 70px rgba(70, 50, 30, .16);
+}
+
+
+/* Left/right envelope folds */
+
+.envelope-body::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 0;
+
+    border-top: 95px solid transparent;
+    border-left: 165px solid #eee7dc;
+
+    z-index: 2;
+}
+
+.envelope-body::after {
+    content: "";
+
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 0;
+
+    border-top: 95px solid transparent;
+    border-right: 165px solid #eee7dc;
+
+    z-index: 2;
+}
+
+
+/* Envelope flap */
+
+.envelope-flap {
+    position: absolute;
+
+    top: 30px;
+    left: 0;
+
+    width: 0;
+    height: 0;
+
+    z-index: 6;
+
+    border-left: 165px solid transparent;
+    border-right: 165px solid transparent;
+    border-top: 110px solid #eee6da;
+
+    transform-origin: top;
+
+    transition:
+        transform 1.5s cubic-bezier(.77,0,.18,1);
+}
+
+.envelope.open .envelope-flap {
+    transform: rotateX(180deg);
+
+    z-index: 1;
+}
+
+
+/* Wax seal */
+
+.seal {
+    position: absolute;
+
+    left: 50%;
+    top: 100px;
+
+    transform: translateX(-50%);
+
+    width: 58px;
+    height: 58px;
+
+    z-index: 10;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #b49b72;
+
+    color: white;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 20px;
+
+    box-shadow:
+        0 7px 20px rgba(70,50,20,.22);
+
+    transition:
+        opacity .6s ease,
+        transform .6s ease;
+}
+
+.envelope.open .seal {
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        scale(.7);
+}
+
+
+/* Intro text */
+
+.open-label {
+    margin-top: 45px;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #8b7961;
+
+    animation:
+        labelPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes labelPulse {
+
+    50% {
+        opacity: .4;
+    }
+}
+
+
+/* =====================================================
+   4. MAIN WEBSITE
+===================================================== */
+
+.main {
+    opacity: 0;
+
+    transition:
+        opacity 2s ease;
+}
+
+.main.visible {
+    opacity: 1;
+}
+
+
+/* =====================================================
+   5. HERO
+===================================================== */
+
+.hero {
+    min-height: 100vh;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.60),
+            rgba(255,255,255,.78)
+        ),
+        url("couple.jpg")
+        center / cover no-repeat;
+}
+
+
+/* Decorative frame */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 20px;
+
+    border:
+        1px solid rgba(173,150,109,.5);
+
+    pointer-events: none;
+}
+
+
+/* Hero content */
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    padding: 30px;
+}
+
+.hero-top {
+    font-size: 10px;
+
+    letter-spacing: 6px;
+
+    color: #766957;
+}
+
+.hero h1 {
+    margin: 25px 0;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(65px, 16vw, 140px);
+
+    font-weight: 400;
+
+    line-height: .8;
+}
+
+.hero h1 .and {
+    color: #b49b72;
+
+    font-style: italic;
+}
+
+.hero-date {
+    font-size: 12px;
+
+    letter-spacing: 6px;
+}
+
+.hero-subtitle {
+    margin-top: 30px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 25px;
+
+    font-style: italic;
+
+    color: #61594f;
+}
+
+
+/* =====================================================
+   6. COMMON SECTION
+===================================================== */
+
+.section {
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding:
+        105px 25px;
+}
+
+.section-title {
+    text-align: center;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 48px;
+
+    font-weight: 500;
+
+    margin-bottom: 22px;
+}
+
+.section-title::after {
+    content: "✦";
+
+    display: block;
+
+    margin-top: 13px;
+
+    font-family: serif;
+
+    font-size: 13px;
+
+    color: #b49b72;
+}
+
+.section-text {
+    max-width: 680px;
+
+    margin: auto;
+
+    text-align: center;
+
+    line-height: 2;
+
+    font-size: 14px;
+
+    color: #686158;
+}
+
+
+/* =====================================================
+   7. PHOTO ZONE
+===================================================== */
+
+.photo-zone {
+    max-width: none;
+
+    min-height: 85vh;
+
+    padding: 50px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.83),
+            rgba(255,255,255,.83)
+        ),
+        url("photobooth.jpg")
+        center / cover no-repeat;
+}
+
+
+.photo-frame {
+    width: min(900px, 92%);
+
+    min-height: 550px;
+
+    border:
+        1px solid #d3c1a4;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    text-align: center;
+}
+
+
+/* Corner decorations */
+
+.photo-frame::before {
+    content: "";
+
+    position: absolute;
+
+    top: 25px;
+    left: 25px;
+
+    width: 100px;
+    height: 100px;
+
+    border-top:
+        1px solid #c8b28e;
+
+    border-left:
+        1px solid #c8b28e;
+}
+
+.photo-frame::after {
+    content: "";
+
+    position: absolute;
+
+    right: 25px;
+    bottom: 25px;
+
+    width: 100px;
+    height: 100px;
+
+    border-right:
+        1px solid #c8b28e;
+
+    border-bottom:
+        1px solid #c8b28e;
+}
+
+
+.photo-content small {
+    letter-spacing: 6px;
+
+    font-size: 10px;
+
+    color: #7d705f;
+}
+
+.photo-content h2 {
+    margin: 18px 0;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(55px, 10vw, 100px);
+
+    font-weight: 400;
+}
+
+.photo-content p {
+    font-size: 11px;
+
+    letter-spacing: 5px;
+
+    color: #817666;
+}
+
+
+/* =====================================================
+   8. INFO CARDS
+===================================================== */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-top: 55px;
+}
+
+.info-card {
+    padding: 45px 20px;
+
+    text-align: center;
+
+    background:
+        rgba(255,255,255,.68);
+
+    border:
+        1px solid #dfd5c7;
+}
+
+.info-icon {
+    font-size: 25px;
+
+    margin-bottom: 15px;
+
+    color: #ad956c;
+}
+
+.info-card h3 {
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 27px;
+
+    font-weight: 500;
+
+    margin-bottom: 12px;
+}
+
+.info-card p {
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    color: #686158;
+}
+
+
+/* =====================================================
+   9. COUNTDOWN
+===================================================== */
+
+.countdown-section {
+    max-width: none;
+
+    background: #eee7dc;
+
+    text-align: center;
+}
+
+.countdown {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 45px;
+
+    flex-wrap: wrap;
+
+    margin-top: 50px;
+}
+
+.time-box {
+    min-width: 80px;
+}
+
+.time-box strong {
+    display: block;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 55px;
+
+    font-weight: 400;
+}
+
+.time-box span {
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    color: #776c5e;
+}
+
+
+/* =====================================================
+   10. LOVE STORY
+===================================================== */
+
+.story {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 60px;
+
+    align-items: center;
+}
+
+.story-image {
+    min-height: 500px;
+
+    background:
+        url("love-story.jpg")
+        center / cover no-repeat;
+
+    border:
+        1px solid #d7c9b7;
+}
+
+.story-text h2 {
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 50px;
+
+    font-weight: 500;
+
+    margin-bottom: 25px;
+}
+
+.story-text p {
+    line-height: 2;
+
+    font-size: 14px;
+
+    color: #686158;
+}
+
+
+/* =====================================================
+   11. PARENTS
+===================================================== */
+
+.parents-section {
+    max-width: none;
+
+    background: #eee8de;
+
+    text-align: center;
+}
+
+.parents-name {
+    margin-top: 30px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 48px;
+
+    color: #3b352e;
+}
+
+
+/* =====================================================
+   12. WISHES
+===================================================== */
+
+.wishes-box {
+    max-width: 760px;
+
+    margin: 50px auto 0;
+
+    padding: 45px 30px;
+
+    text-align: center;
+
+    background:
+        rgba(255,255,255,.55);
+
+    border:
+        1px solid #ddd1c0;
+}
+
+.wishes-box p {
+    line-height: 2.1;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 21px;
+
+    color: #514b43;
+}
+
+
+/* =====================================================
+   13. RSVP
+===================================================== */
+
+.rsvp {
+    text-align: center;
+}
+
+.rsvp-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin-top: 40px;
+}
+
+.rsvp-button {
+    padding:
+        16px 25px;
+
+    border:
+        1px solid #b49b72;
+
+    background:
+        transparent;
+
+    color: #514a41;
+
+    cursor: pointer;
+
+    transition: .35s;
+}
+
+.rsvp-button:hover,
+.rsvp-button.selected {
+    background: #b49b72;
+
+    color: white;
+}
+
+
+/* =====================================================
+   14. FOOTER
+===================================================== */
+
+footer {
+    padding:
+        80px 20px;
+
+    text-align: center;
+
+    background: #2d2925;
+
+    color: white;
+}
+
+footer h2 {
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 52px;
+
+    font-weight: 400;
+}
+
+footer p {
+    margin-top: 15px;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    opacity: .7;
+}
+
+
+/* =====================================================
+   15. MUSIC BUTTON
+===================================================== */
+
+.music-button {
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    z-index: 5000;
+
+    width: 55px;
+    height: 55px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid #b49b72;
+
+    background:
+        rgba(255,255,255,.92);
+
+    color: #6b5c49;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.12);
+}
+
+.music-button.playing {
+    animation:
+        musicRotate 4s linear infinite;
+}
+
+@keyframes musicRotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =====================================================
+   16. MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .envelope {
+        width: 290px;
+    }
+
+    .envelope-flap {
+        border-left-width: 145px;
+        border-right-width: 145px;
+    }
+
+    .envelope-body::before {
+        border-left-width: 145px;
+    }
+
+    .envelope-body::after {
+        border-right-width: 145px;
+    }
+
+    .envelope-paper {
+        left: 25px;
+        width: 240px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .story {
+        grid-template-columns: 1fr;
+    }
+
+    .story-image {
+        min-height: 380px;
+    }
+
+    .photo-frame {
+        min-height: 430px;
+    }
+
+    .photo-frame::before,
+    .photo-frame::after {
+        width: 65px;
+        height: 65px;
+    }
+
+    .countdown {
+        gap: 25px;
+    }
+
+    .time-box strong {
+        font-size: 45px;
+    }
+
+    .section {
+        padding: 80px 20px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     INTRO ENVELOPE
+===================================================== -->
+
+<div class="intro" id="intro">
+
+    <div class="envelope-wrapper">
+
+        <div class="envelope" id="envelope">
+
+            <!-- Letter -->
+            <div class="envelope-paper">
+
+                <span>
+                    WEDDING INVITATION
+                </span>
+
+                <h2>
+                    Joki & Aidana
+                </h2>
+
+                <span>
+                    10 · 10 · 2026
+                </span>
+
+            </div>
+
+
+            <!-- Envelope body -->
+            <div class="envelope-body"></div>
+
+
+            <!-- Envelope flap -->
+            <div class="envelope-flap"></div>
+
+
+            <!-- Seal -->
+            <div class="seal">
+                J & A
+            </div>
+
+        </div>
+
+
+        <div class="open-label">
+            БИЗДИН ӨЗГӨЧӨ КҮНҮБҮЗ
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MUSIC
+===================================================== -->
+
+<audio id="weddingMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+
+<button
+    class="music-button"
+    id="musicButton"
+    aria-label="Музыканы күйгүзүү же өчүрүү">
+    ♫
+</button>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main" id="main">
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<div class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-top">
+            БИЗДИН ӨЗГӨЧӨ КҮНҮБҮЗ
+        </div>
+
+        <h1>
+            Joki
+            <span class="and">&</span>
+            Aidana
+        </h1>
+
+        <div class="hero-date">
+            10 · 10 · 2026
+        </div>
+
+        <div class="hero-subtitle">
+            Эки жүрөк — бир тагдыр
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     INVITATION
+===================================================== -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Сиздерди күтөбүз
+    </h2>
+
+    <p class="section-text">
+
+        Сүйүүбүздүн эң сонун күнүн
+        сиздер менен бирге өткөрүп,
+        кубанычыбызды бөлүшкүбүз келет.
+
+        <br><br>
+
+        Жашообуздагы бул өзгөчө күнгө
+        күбө болуп, ак тилегиңиздерди айтып,
+        төрүбүздөн орун алыңыздар.
+
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     PHOTO ZONE
+===================================================== -->
+
+<section class="photo-zone">
+
+    <div class="photo-frame">
+
+        <div class="photo-content">
+
+            <small>
+                OUR SPECIAL DAY
+            </small>
+
+            <h2>
+                Joki ♡ Aidana
+            </h2>
+
+            <p>
+                10 · 10 · 2026
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WEDDING INFORMATION
+===================================================== -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Тойдун дареги
+    </h2>
+
+
+    <div class="info-grid">
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                ♡
+            </div>
+
+            <h3>
+                Күнү
+            </h3>
+
+            <p>
+                10-октябрь<br>
+                2026-жыл
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                ⌚
+            </div>
+
+            <h3>
+                Убактысы
+            </h3>
+
+            <p>
+                Саат 16:00
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                ⌖
+            </div>
+
+            <h3>
+                Дареги
+            </h3>
+
+            <p>
+                «Хан Ордо» рестораны<br>
+                Кочкор району
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     COUNTDOWN
+===================================================== -->
+
+<section class="section countdown-section">
+
+    <h2 class="section-title">
+        Өзгөчө күнгө чейин
+    </h2>
+
+    <div class="countdown">
+
+
+        <div class="time-box">
+
+            <strong id="days">
+                00
+            </strong>
+
+            <span>
+                КҮН
+            </span>
+
+        </div>
+
+
+        <div class="time-box">
+
+            <strong id="hours">
+                00
+            </strong>
+
+            <span>
+                СААТ
+            </span>
+
+        </div>
+
+
+        <div class="time-box">
+
+            <strong id="minutes">
+                00
+            </strong>
+
+            <span>
+                МҮНӨТ
+            </span>
+
+        </div>
+
+
+        <div class="time-box">
+
+            <strong id="seconds">
+                00
+            </strong>
+
+            <span>
+                СЕКУНД
+            </span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     LOVE STORY
+===================================================== -->
+
+<section class="section">
+
+    <div class="story">
+
+
+        <div class="story-image"></div>
+
+
+        <div class="story-text">
+
+            <h2>
+                Биздин сүйүү баяныбыз
+            </h2>
+
+            <p>
+
+                Кээ бир жолугушуулар жөн гана
+                кокустук эмес.
+
+                <br><br>
+
+      
